@@ -42,7 +42,6 @@ def subscribe_chat(message):
 # interpret it as a password
 @bot.message_handler(func=lambda message: user_step.get(message.chat.id) == TEAM_USER_LOGGING)
 def team_user_login(message):
-    global team_users
     if message.text == 'password1':
         team_users.add(TeamUser(message.chat.id))
         user_step[message.chat.id] = TEAM_USER_ACCEPTED
@@ -53,7 +52,6 @@ def team_user_login(message):
 # Custom command to remove user from an operator`s team
 @bot.message_handler(commands=['off'])
 def team_user_logout(message):
-    global team_users
     if message.chat.id not in team_users:
         bot.reply_to(message, "You are not an operator anyway")
     else:
